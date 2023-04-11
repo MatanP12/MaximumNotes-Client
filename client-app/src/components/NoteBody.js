@@ -1,20 +1,19 @@
-import {  Typography } from "@mui/material";
+import {  TextField, Typography } from "@mui/material";
 
-function NoteBodyView({data}){
+function NoteBodyEdit({note, handleBodyChange}){
     return (
-        <Typography 
-        variant="body2"
-        sx={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            display: "-webkit-box",
-            WebkitLineClamp: "11",
-            WebkitBoxOrient: "vertical",
-        }}
-        >
-            {data}
-        </Typography>
+        <TextField  
+        size="small"
+        variant="standard" 
+        fullWidth
+        multiline={true}
+        rows={20}
+        value={note.body}
+        name="body"
+        InputProps={{ disableUnderline: true }}
+        onChange={handleBodyChange}
+        />
     );
 }
 
-export default NoteBodyView;
+export default NoteBodyEdit;
