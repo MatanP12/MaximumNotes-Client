@@ -20,7 +20,14 @@ function TopBar(){
 
 function Home(){   
     
-    const notes = getNotesFromAPI();
+    const [notes, setNotes] = useState(getNotesFromAPI());
+
+    function handleSaveNote(newNote){
+        // console.log("New note", newNote);
+        setNotes([newNote, ...notes])
+    }
+
+    // console.log(notes);
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -28,6 +35,7 @@ function Home(){
             <TopBar/>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <Toolbar />
+                <NoteCreationBox handleSaveNote={handleSaveNote}/>
                 <Grid container spacing={1.5} >
                     {notes.map((currNote, index)=>{
                         return (

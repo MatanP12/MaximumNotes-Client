@@ -1,30 +1,25 @@
-import { Box, TextField, Typography } from "@mui/material";
-import NoteBodyEdit from "./NoteBody";
+import ReactQuill from "react-quill";
+import { EditorFormats, EditorModules } from "../utils/EditorOptions";
+import 'react-quill/dist/quill.snow.css';
 
-function NoteEdit({note, updateNote}){
-
-    function handleNoteChange(e){
-        const {name, value} = e.target;
-        updateNote(name, value);
-    }
+function NoteEditor({noteBody, handleBodyChange, onFocusEditor, onBlurEditor}){
 
     return (
-        <Box sx={{}}>
-            <TextField 
-                variant="standard"
-                value={note.title} 
-                name="title" 
-                onChange={handleNoteChange}/>
-            <Typography variant="body2">
-                {note.creation_time}
-            </Typography>
-            <NoteBodyEdit note={note} handleBodyChange={handleNoteChange}/>
-        </Box>
+        <div data-text-editor="name">
+            <ReactQuill 
+                onFocus={onFocusEditor}
+                onBlur={onBlurEditor }
+                placeholder="Take a note..."
+                theme="snow" 
+                value={noteBody} 
+                onChange={handleBodyChange}
+                modules={EditorModules}
+                formats={EditorFormats}
+                bounds={`[data-text-editor="name"]`}
+            />       
+        </div>
+
     );
 }
 
-
-
-
-
-export default NoteEdit;
+export default NoteEditor;

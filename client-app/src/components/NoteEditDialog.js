@@ -1,7 +1,5 @@
 import { Dialog, DialogContent, DialogTitle, TextField } from "@mui/material";
-import ReactQuill from "react-quill";
-import { EditorFormats, EditorModules } from "../utils/EditorOptions";
-import 'react-quill/dist/quill.snow.css';
+import NoteEditor from "./NoteEditor";
 
 
 
@@ -15,7 +13,6 @@ function NoteEditDialog({isOpen, note, handleClose, updateNote, children}){
 
     function handleBodyChange(newBody){
         updateNote("body",newBody);
-
     }
 
 
@@ -29,17 +26,7 @@ function NoteEditDialog({isOpen, note, handleClose, updateNote, children}){
              <TextField variant="standard" fullWidth multiline name={"title"} value={note.title} onChange={handleChange}/>
         </DialogTitle>
         <DialogContent >
-            <div data-text-editor="name">
-                <ReactQuill 
-                    theme="snow" 
-                    value={note.body} 
-                    onChange={handleBodyChange}
-                    modules={EditorModules}
-                    formats={EditorFormats}
-                    bounds={`[data-text-editor="name"]`}
-                />       
-            </div>
-
+            <NoteEditor handleBodyChange={handleBodyChange} noteBody={note.body}/>
         </DialogContent>
         </Dialog>
     );
