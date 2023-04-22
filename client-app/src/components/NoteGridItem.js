@@ -5,7 +5,7 @@ import { useState } from "react";
 import NoteEditDialog from "./NoteEditDialog";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.bubble.css'
-import { NotesColors, colors } from "../utils/notes";
+import { NotesColors } from "../utils/ServerCalls";
 
 
 
@@ -111,12 +111,13 @@ function NoteGridItem({note}){
                     title={currNote.title}
                     titleTypographyProps={titleTypographyProps}
                     subheaderTypographyProps={subTitleTypographyProps}
-                    subheader={currNote.creation_time} 
+                    subheader={currNote.last_edit_time.toDateString()} 
                     sx={{
                         pb:0,
                         backgroundColor: currNote.color
                     }}
                     />
+                
                 <CardContent   sx={{
                     maxHeight:"400px",
                     overflow:"hidden",

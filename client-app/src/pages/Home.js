@@ -1,7 +1,8 @@
 import { AppBar, Box, CssBaseline, Drawer, Grid, List, ListItemButton, Toolbar, Typography } from "@mui/material";
 import NoteGridItem from "../components/NoteGridItem";
-import getNotesFromAPI from "../utils/notes";
+import getNotesFromAPI from "../utils/ServerCalls";
 import { useState } from "react";
+import NoteCreationBox from "../components/NoteCreationBox";
 
 
 function TopBar(){
@@ -18,7 +19,7 @@ function TopBar(){
 
 
 function Home(){   
-
+    
     const notes = getNotesFromAPI();
 
     return (
@@ -30,7 +31,7 @@ function Home(){
                 <Grid container spacing={1.5} >
                     {notes.map((currNote, index)=>{
                         return (
-                            <Grid item key={index} md={6} xs={12} sm={12} lg={3}>
+                            <Grid item key={currNote.id} md={6} xs={12} sm={12} lg={3} >
                                 <NoteGridItem note={currNote}/>
                             </Grid>
                         );
