@@ -1,4 +1,4 @@
-import { AppBar, Box, CssBaseline, Drawer, Grid, List, ListItemButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, CssBaseline, Grid, Toolbar, Typography } from "@mui/material";
 import NoteGridItem from "../components/NoteGridItem";
 import getNotesFromAPI from "../utils/ServerCalls";
 import { useState } from "react";
