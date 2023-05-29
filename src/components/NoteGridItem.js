@@ -1,12 +1,11 @@
-import { Card, CardActionArea, CardActions, CardContent, CardHeader, IconButton, Menu, MenuItem } from "@mui/material";
+import { Card, CardActionArea, CardActions, CardContent, CardHeader, Chip, IconButton, Menu, MenuItem, Stack } from "@mui/material";
 import { ColorLensOutlined, DeleteOutline, ContentPaste } from "@mui/icons-material";
 import CircleIcon from '@mui/icons-material/Circle';
 import { useState } from "react";
 import NoteEditDialog from "./NoteEditDialog";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.bubble.css'
-import { NotesColors } from "../utils/ServerCalls";
-
+import { NotesColors } from "../utils/Note";
 
 
 
@@ -65,21 +64,38 @@ function ColorSelectMenu({anchor, handleClose, setColor}){
     );
 }
 
+function CardActionsMenu({setAnchor, noteTags}){
 
-function CardActionsMenu({setAnchor}){
+    const tagsArr = noteTags.slice(0, 3);
+    const leftOvers = noteTags.length - tagsArr.length;
 
     return (
-        <CardActions disableSpacing={true} >
-        <IconButton onClick={()=>{console.log("Deleted!")}}>
-            <DeleteOutline fontSize="small" />
-        </IconButton>
-        <IconButton onClick={(e)=>{setAnchor(e.currentTarget)}}>
-            <ColorLensOutlined fontSize="small"/>
-        </IconButton>
-        <IconButton>
-            <ContentPaste fontSize="small"/>
-        </IconButton>
-    </CardActions>
+        <CardActions disableSpacing={true} sx={{
+            display:"block"
+        }}>
+            <Stack direction="row" spacing={1}>
+                {tagsArr.map((currTag, index)=>{
+                    return (
+                        <Chip 
+                            sx={{
+                                maxWidth: "33%",
+                                overflow: "hidden",
+                            }}      
+                        label={currTag} variant="outlined" />
+                    );
+                })}
+                {leftOvers !== 0 && <Chip label={`+${leftOvers}`}/>}
+            </Stack>
+            <IconButton onClick={()=>{console.log("Deleted!")}}>
+                <DeleteOutline fontSize="small" />
+            </IconButton>
+            <IconButton onClick={(e)=>{setAnchor(e.currentTarget)}}>
+                <ColorLensOutlined fontSize="small"/>
+            </IconButton>
+            <IconButton>
+                <ContentPaste fontSize="small"/>
+            </IconButton>
+        </CardActions>
 
     );
 
@@ -104,8 +120,7 @@ function NoteGridItem({note}){
     }
 
     return (
-        <Card 
-        >
+        <Card hidden={openEditDialog}>
             <CardActionArea onClick={()=>{setOpenEditDialog(true)}}>
                 <CardHeader       
                     title={currNote.title}
@@ -126,7 +141,7 @@ function NoteGridItem({note}){
                     <NoteBodyView data={currNote.body}/>
                 </CardContent>
             </CardActionArea>
-            <CardActionsMenu setAnchor={setAnchorEl}/>
+            <CardActionsMenu setAnchor={setAnchorEl} noteTags={currNote.tags}/>
             <ColorSelectMenu anchor={anchorEl} setColor={setNoteColor} handleClose={handleCloseColorMenu} />
             <NoteEditDialog note={currNote} isOpen={openEditDialog} handleClose={()=>{setOpenEditDialog(false)}} updateNote={updateNote}/>
         </Card>
