@@ -1,10 +1,11 @@
-import { Dialog, DialogContent, DialogTitle, TextField } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import NoteEditor from "./NoteEditor";
+import ActionsMenu from "./ActionsMenu";
 
 
 
 
-function NoteEditDialog({isOpen, note, handleClose, updateNote, children}){
+function NoteEditDialog({isOpen, note, handleClose, updateNote}){
 
     function handleChange(e){
         const {name, value} = e.target;
@@ -13,6 +14,10 @@ function NoteEditDialog({isOpen, note, handleClose, updateNote, children}){
 
     function handleBodyChange(newBody){
         updateNote("body",newBody);
+    }
+
+    function handleSetColor(newColor){
+        updateNote("color", newColor);
     }
 
 
@@ -25,9 +30,16 @@ function NoteEditDialog({isOpen, note, handleClose, updateNote, children}){
         <DialogTitle sx={{backgroundColor:note.color}}>
              <TextField variant="standard" fullWidth multiline name={"title"} value={note.title} onChange={handleChange}/>
         </DialogTitle>
-        <DialogContent >
+        <DialogContent sx={{
+            paddingBottom: 1
+        }}>
             <NoteEditor handleBodyChange={handleBodyChange} noteBody={note.body}/>
         </DialogContent>
+        <DialogActions sx={{
+            display:"block"
+        }}>
+            <ActionsMenu setNoteColor={handleSetColor} noteTags={note.tags} />
+        </DialogActions>
         </Dialog>
     );
 }
