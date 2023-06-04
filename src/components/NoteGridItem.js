@@ -39,7 +39,7 @@ function NoteBodyView({data}){
     );
 }
 
-function NoteGridItem({note}){
+function NoteGridItem({note, setTag}){
     const [currNote, setCurrNote] = useState(note);
     const [openEditDialog, setOpenEditDialog] = useState(false);
 
@@ -78,9 +78,11 @@ function NoteGridItem({note}){
                 sx={{
                     display:"block"
             }}>
-                <ActionsMenu noteTags={currNote.tags} setNoteColor={setNoteColor}/>
+                <ActionsMenu noteTags={currNote.tags} setNoteColor={setNoteColor} setTag={setTag}/>
             </CardActions>
-            <NoteEditDialog note={currNote} isOpen={openEditDialog} handleClose={()=>{setOpenEditDialog(false)}} updateNote={updateNote}/>
+            <NoteEditDialog note={currNote} isOpen={openEditDialog} handleClose={()=>{setOpenEditDialog(false)}} 
+            updateNote={updateNote} 
+            setTag={setTag}/>
         </Card>
     );
 }

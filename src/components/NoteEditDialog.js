@@ -5,7 +5,7 @@ import ActionsMenu from "./ActionsMenu";
 
 
 
-function NoteEditDialog({isOpen, note, handleClose, updateNote}){
+function NoteEditDialog({isOpen, note, handleClose, updateNote, setTag}){
 
     function handleChange(e){
         const {name, value} = e.target;
@@ -18,6 +18,11 @@ function NoteEditDialog({isOpen, note, handleClose, updateNote}){
 
     function handleSetColor(newColor){
         updateNote("color", newColor);
+    }
+
+    function handleSetTag(newTag){
+        setTag(newTag);
+        handleClose();
     }
 
 
@@ -38,7 +43,7 @@ function NoteEditDialog({isOpen, note, handleClose, updateNote}){
         <DialogActions sx={{
             display:"block"
         }}>
-            <ActionsMenu setNoteColor={handleSetColor} noteTags={note.tags} />
+            <ActionsMenu setNoteColor={handleSetColor} noteTags={note.tags} setTag={handleSetTag} />
         </DialogActions>
         </Dialog>
     );
