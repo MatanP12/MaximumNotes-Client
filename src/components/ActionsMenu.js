@@ -25,7 +25,7 @@ function ColorSelectMenu({anchor, handleClose, setColor}){
     );
 }
 
-function ActionsMenu({ noteTags, setNoteColor, onCopyNote}){
+function ActionsMenu({ noteTags, setNoteColor, onCopyNote, setTag}){
     const [anchorEl, setAnchorEl] = useState(null);
     function handleCloseColorMenu(){
         setAnchorEl(null);
@@ -42,6 +42,7 @@ function ActionsMenu({ noteTags, setNoteColor, onCopyNote}){
                 {noteTags.map((currTag, index)=>{
                     return (
                         <Chip
+                            onClick={()=>{setTag(currTag)}}
                             key={index} 
                             sx={{
                                 maxWidth: "33%",

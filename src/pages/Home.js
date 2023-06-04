@@ -47,7 +47,7 @@ function Home(){
                     {tagsMap.get(currTag).map((currNote)=>{
                         return (
                             <Grid item key={currNote.id} md={6} xs={12} sm={12} lg={3} >
-                                <NoteGridItem note={currNote}/>
+                                <NoteGridItem note={currNote} setTag={setCurrTag}/>
                             </Grid>
                         );
                     })}
