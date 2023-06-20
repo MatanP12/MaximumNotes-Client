@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppBar, Box, CssBaseline, Grid, Toolbar, Typography } from "@mui/material";
 import NoteGridItem from "../components/NoteGridItem";
-import getNotesFromAPI from "../utils/ServerCalls";
 import { useMemo, useState } from "react";
 import NoteCreationBox from "../components/NoteCreationBox";
 import SideBar from "../components/SideBar";
@@ -23,17 +22,31 @@ function TopBar(){
 
 function Home(){   
     const all = "Notes";
-    const [notes, setNotes] = useState(getNotesFromAPI());
+    const [notes, setNotes] = useState([]);
     const [currTag, setCurrTag] = useState(all);
+
     function handleSaveNote(newNote){
         setNotes([newNote, ...notes])
     }
 
+    useEffect(()=>{
+      fetch('http://localhost:3000/notes').then((res)=>{
+        if(!res.ok){
+          throw Error("Something went wrong")
+        }
+        res.json().then((data)=>{
+          console.log("run");
+          const newData = data.map((currNote)=>{
+            return {...currNote, last_edit_time: new Date(currNote.last_edit_time)}
+          })
+          setNotes(newData);
+        })
+      }).catch((err)=> console.error(err));
+    }, [])
+
     const tagsMap = useMemo(
       ()=> createTagsMap(notes), [notes]
     );
-
-    console.log(tagsMap)
 
     return (
         <Box sx={{ display: 'flex' }}>
